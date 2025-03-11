@@ -1,0 +1,7 @@
+dist/
+tmp/
+out-tsc/
+.angular/
+.angular-cache/
+coverage/
+src/environments/environment*.ts
