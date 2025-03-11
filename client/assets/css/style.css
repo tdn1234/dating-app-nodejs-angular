@@ -1,0 +1,118 @@
+body {
+    padding-top: 70px;
+    background-color: #f5f5f5;
+  }
+  
+  .main-container {
+    padding-bottom: 30px;
+  }
+  
+  .panel {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .panel-primary > .panel-heading {
+    background-color: #ff4081;
+    border-color: #ff4081;
+  }
+  
+  .btn-primary {
+    background-color: #ff4081;
+    border-color: #f50057;
+  }
+  
+  .btn-primary:hover,
+  .btn-primary:focus,
+  .btn-primary:active {
+    background-color: #f50057;
+    border-color: #c51162;
+  }
+  
+  .jumbotron {
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    transition: transform 0.2s ease-in-out;
+    background-color: white;
+  }
+  
+  .user-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    margin: 20px auto;
+    background-color: #ff4081;
+    border-radius: 100%;  
+    animation: sk-scaleout 1.0s infinite ease-in-out;
+  }
+  
+  @keyframes sk-scaleout {
+    0% { 
+      transform: scale(0);
+    } 100% {
+      transform: scale(1.0);
+      opacity: 0;
+    }
+  }
+  
+  #map {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .matches-container .match {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .matches-container .match:last-child {
+    border-bottom: none;
+  }
+  
+  .chat-container {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    display: inline-block;
+    max-width: 80%;
+  }
+  
+  .message.sent {
+    background-color: #ff4081;
+    color: white;
+    float: right;
+    clear: both;
+  }
+  
+  .message.received {
+    background-color: #e0e0e0;
+    color: #333;
+    float: left;
+    clear: both;
+  }
+  
+  .message-input {
+    margin-top: 10px;
+  }
+  

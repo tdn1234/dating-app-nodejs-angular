@@ -1,0 +1,30 @@
+<div class="jumbotron text-center">
+    <h1>Welcome to Date Finder</h1>
+    <p class="lead">Find dates near you using our location-based matching system.</p>
+    <div ng-if="!isAuthenticated()">
+      <p>
+        <a class="btn btn-lg btn-primary" ng-click="goToRegister()">Sign Up</a>
+        <a class="btn btn-lg btn-default" ng-click="goToLogin()">Login</a>
+      </p>
+    </div>
+    <div ng-if="isAuthenticated()">
+      <p>
+        <a class="btn btn-lg btn-success" href="#/browse">Start Browsing</a>
+      </p>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <h2>Find People Near You</h2>
+      <p>Our app uses your location to find potential matches in your area.</p>
+    </div>
+    <div class="col-md-4">
+      <h2>Match & Chat</h2>
+      <p>Connect with people you like and start a conversation when you match.</p>
+    </div>
+    <div class="col-md-4">
+      <h2>Date Safely</h2>
+      <p>Meet in public places and follow our safety guidelines for the best experience.</p>
+    </div>
+  </div>

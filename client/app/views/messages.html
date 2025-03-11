@@ -1,0 +1,96 @@
+<div class="row">
+    <div class="col-md-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">My Matches</h3>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+          
+          <!-- Loading indicator -->
+          <div class="text-center" ng-if="loading">
+            <p>Loading matches...</p>
+            <div class="spinner"></div>
+          </div>
+          
+          <!-- No matches message -->
+          <div class="text-center" ng-if="!loading && matches.length === 0">
+            <p>No matches found. Start browsing to find matches!</p>
+            <a href="#/browse" class="btn btn-primary">Browse Users</a>
+          </div>
+          
+          <!-- Match list -->
+          <div class="matches-container" ng-if="matches.length > 0">
+            <div class="match" ng-repeat="match in matches" 
+                 ng-class="{'active': currentMatch._id === match._id}"
+                 ng-click="selectMatch(match)">
+              <div class="media">
+                <div class="media-left">
+                  <img class="media-object img-circle" 
+                       ng-src="{{ (match.users[0]._id !== currentUser._id ? match.users[0].avatar : match.users[1].avatar) || 'assets/img/default-avatar.jpg' }}" 
+                       style="width: 50px; height: 50px;">
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading">
+                    {{ match.users[0]._id !== currentUser._id ? match.users[0].name : match.users[1].name }}
+                  </h4>
+                  <p class="text-muted">
+                    <small>Last activity: {{ match.lastActivity | date:'short' }}</small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title" ng-if="currentMatch">
+            Conversation with {{ currentMatch.users[0]._id !== currentUser._id ? currentMatch.users[0].name : currentMatch.users[1].name }}
+          </h3>
+          <h3 class="panel-title" ng-if="!currentMatch">Select a conversation</h3>
+        </div>
+        <div class="panel-body">
+          <!-- No match selected message -->
+          <div class="text-center" ng-if="!currentMatch && matches.length > 0">
+            <p>Select a match to view your conversation</p>
+          </div>
+          
+          <!-- Conversation -->
+          <div ng-if="currentMatch">
+            <div class="chat-container">
+              <div ng-repeat="message in messages" style="overflow: hidden; margin-bottom: 10px;">
+                <div class="message" 
+                     ng-class="{'sent': message.sender === currentUser._id, 'received': message.sender !== currentUser._id}">
+                  {{ message.content }}
+                  <div style="font-size: 10px; opacity: 0.7; margin-top: 2px;">
+                    {{ message.createdAt | date:'short' }}
+                  </div>
+                </div>
+              </div>
+              
+              <!-- No messages -->
+              <div class="text-center" ng-if="messages.length === 0">
+                <p>No messages yet. Say hello!</p>
+              </div>
+            </div>
+            
+            <div class="message-input">
+              <form ng-submit="sendMessage()">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Type a message..." 
+                         ng-model="newMessage">
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Send</button>
+                  </span>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

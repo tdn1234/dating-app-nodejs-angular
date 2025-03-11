@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">My Matches</h3>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+          
+          <!-- Loading indicator -->
+          <div class="text-center" ng-if="loading">
+            <p>Loading matches...</p>
+            <div class="spinner"></div>
+          </div>
+          
+          <!-- Pending match requests -->
+          <div ng-if="pendingMatches.length > 0">
+            <h4>Pending Match Requests ({{ pendingMatches.length }})</h4>
+            <div class="row">
+              <div class="col-md-4" ng-repeat="match in pendingMatches">
+                <div class="panel panel-default">
+                  <div class="panel-body text-center">
+                    <img ng-src="{{ match.initiatedBy.avatar || 'assets/img/default-avatar.jpg' }}" 
+                         class="img-circle" style="width: 100px; height: 100px;">
+                    <h4>{{ match.initiatedBy.name }}</h4>
+                    <div style="margin-top: 15px;">
+                      <button class="btn btn-success" ng-click="acceptMatch(match._id)">
+                        <span class="glyphicon glyphicon-ok"></span> Accept
+                      </button>
+                      <button class="btn btn-danger" ng-click="rejectMatch(match._id)">
+                        <span class="glyphicon glyphicon-remove"></span> Reject
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Matches -->
+          <h4>My Matches ({{ matches.length }})</h4>
+          <div class="row">
+            <div class="col-md-4" ng-repeat="match in matches">
+              <div class="panel panel-default">
+                <div class="panel-body text-center">
+                  <img ng-src="{{ (match.users[0]._id !== currentUser._id ? match.users[0].avatar : match.users[1].avatar) || 'assets/img/default-avatar.jpg' }}" 
+                       class="img-circle" style="width: 100px; height: 100px;">
+                  <h4>{{ match.users[0]._id !== currentUser._id ? match.users[0].name : match.users[1].name }}</h4>
+                  <p class="text-muted">Matched on {{ match.createdAt | date }}</p>
+                  <button class="btn btn-primary" ng-click="goToConversation(match._id)">
+                    <span class="glyphicon glyphicon-comment"></span> Message
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <!-- No matches message -->
+            <div class="col-md-12 text-center" ng-if="matches.length === 0 && !loading">
+              <p>No matches found. Start browsing to find matches!</p>
+              <a href="#/browse" class="btn btn-primary">Browse Users</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

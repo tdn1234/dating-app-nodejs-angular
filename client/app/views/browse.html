@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-md-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">People Near You</h3>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-danger" ng-if="error">{{ error }}</div>
+          
+          <!-- Map view - Using the mapView directive -->
+          <map-view users="nearbyUsers" on-user-select="selectUser(user)"></map-view>
+          
+          <!-- Loading indicator -->
+          <div class="text-center" ng-if="loading">
+            <p>Finding people near you...</p>
+            <div class="spinner"></div>
+          </div>
+          
+          <!-- No users message -->
+          <div class="text-center" ng-if="!loading && nearbyUsers.length === 0">
+            <p>No users found near your location.</p>
+            <button class="btn btn-primary" ng-click="refresh()">Refresh</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">User Details</h3>
+        </div>
+        <div class="panel-body">
+          <!-- Selected user profile -->
+          <div ng-if="selectedUser">
+            <div class="text-center">
+              <img ng-src="{{ selectedUser.avatar || 'assets/img/default-avatar.jpg' }}" class="img-circle" style="width: 150px; height: 150px;">
+              <h3>{{ selectedUser.name }}, {{ selectedUser.age }}</h3>
+            </div>
+            
+            <p>{{ selectedUser.bio || 'No bio available' }}</p>
+            
+            <h4>Interests</h4>
+            <p>
+              <span class="label label-primary" ng-repeat="interest in selectedUser.interests" style="margin-right: 5px;">{{ interest }}</span>
+              <span ng-if="!selectedUser.interests || selectedUser.interests.length === 0">No interests listed</span>
+            </p>
+            
+            <div class="text-center" style="margin-top: 20px;">
+              <button class="btn btn-success btn-lg" ng-click="likeUser(selectedUser._id)">
+                <span class="glyphicon glyphicon-heart"></span> Like
+              </button>
+              <button class="btn btn-default btn-lg" ng-click="skipUser(selectedUser._id)">
+                <span class="glyphicon glyphicon-remove"></span> Skip
+              </button>
+            </div>
+          </div>
+          
+          <!-- No user selected message -->
+          <div class="text-center" ng-if="!selectedUser && nearbyUsers.length > 0">
+            <p>Click on a user on the map to view their profile</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
