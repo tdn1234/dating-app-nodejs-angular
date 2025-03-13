@@ -5,3 +5,4 @@ out-tsc/
 .angular-cache/
 coverage/
 src/environments/environment*.ts
+node_modules
