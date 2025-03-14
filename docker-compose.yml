@@ -1,25 +1,57 @@
-version: '3'
+version: '3.8'
+
 services:
+  # Angular frontend
   client:
-    build: ./client
+    build:
+      context: ./client # Path to Angular project
+      dockerfile: Dockerfile
+    container_name: angular-client
     ports:
       - "80:80"
     depends_on:
       - server
+    networks:
+      - app-network
+    restart: unless-stopped
 
+  # Node.js API
   server:
-    build: ./server
+    build:
+      context: ./server # Path to Node.js project
+      dockerfile: Dockerfile
+    container_name: nodejs-api
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=mongodb://localhost:27017/
-    depends_on:
-      - mongo
-
-  mongo:
-    image: mongo:latest
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGO_URI=mongodb://mongodb:27017/myapp
     volumes:
-      - mongo-data:/data/db
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # MongoDB (Optional - if your app needs a database)
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
-  mongo-data:
+  mongo_data:
+    driver: local
